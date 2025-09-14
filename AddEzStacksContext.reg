@@ -1,0 +1,7 @@
+Windows Registry Editor Version 5.00
+
+[HKEY_CLASSES_ROOT\*\shell\UpdateStacknumberEzStacks]
+@="Update Stacknumber with EzStacks"
+
+[HKEY_CLASSES_ROOT\*\shell\UpdateStacknumberEzStacks\command]
+@="\"C:\\Utilities\\7d2d\\EzStacks.exe\" \"%1\""

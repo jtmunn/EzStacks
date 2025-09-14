@@ -12,6 +12,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <Link>items.xml</Link>
     </None>
+    <None Include="..\AddEzStacksContext.reg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
