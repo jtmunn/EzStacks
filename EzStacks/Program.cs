@@ -1,4 +1,6 @@
-﻿using System.Xml;
+﻿using System;
+using System.Linq;
+using System.Xml;
 
 class Program
 {
@@ -17,14 +19,31 @@ class Program
         };
         doc.Load(path);
 
-        var nodes = doc.SelectNodes("//property[@name='Stacknumber']");
-        if (nodes != null)
+        var stackNodes = doc.SelectNodes("//property[@name='Stacknumber']");
+        if (stackNodes != null)
         {
-            foreach (var node in nodes)
+            foreach (XmlNode stackNode in stackNodes)
             {
-                if (node is XmlElement el)
+                if (stackNode is XmlElement stackEl)
                 {
-                    el.SetAttribute("value", "50000");
+                    var parent = stackEl.ParentNode;
+                    if (parent != null)
+                    {
+                        var tagsNode = parent.SelectSingleNode("property[@name='Tags']");
+                        bool containsVehicle = false;
+
+                        if (tagsNode is XmlElement tagsEl)
+                        {
+                            var tagsValue = tagsEl.GetAttribute("value");
+                            var tags = tagsValue.Split(',').Select(t => t.Trim());
+                            containsVehicle = tags.Contains("vehicle");
+                        }
+
+                        if (!containsVehicle)
+                        {
+                            stackEl.SetAttribute("value", "50000");
+                        }
+                    }
                 }
             }
         }
@@ -32,5 +51,3 @@ class Program
         doc.Save(path);
     }
 }
-
-
